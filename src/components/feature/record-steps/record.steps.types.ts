@@ -1,6 +1,6 @@
 import { TRecord, TScore } from '@/types';
 
-export type TSteps = 'mood' | 'tag' | 'description';
+export type TStep = number;
 
 export type THandleUpdateRecord = (
   key: keyof TRecord,
@@ -9,4 +9,4 @@ export type THandleUpdateRecord = (
 
 export type TRecordState = Partial<TRecord> & { score: TScore };
 
-export type THandleClickNext = (nextStep: TSteps) => void;
+export type THandleClickNext = (nextStep: number) => void;

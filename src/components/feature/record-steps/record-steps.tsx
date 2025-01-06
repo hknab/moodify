@@ -4,16 +4,20 @@ import {
   THandleClickNext,
   THandleUpdateRecord,
   TRecordState,
-  TSteps,
+  TStep,
 } from './record.steps.types';
 import { MoodStep } from './mood-step';
+import { TagStep } from './tag-step';
 
 const RecordSteps = () => {
-  const [step, setStep] = useState<TSteps>('mood');
+  const [step, setStep] = useState<TStep>(1);
 
   const [record, setRecord] = useState<TRecordState>({
     score: 3,
   });
+
+  console.log({ record });
+
   const handleUpdateRecord: THandleUpdateRecord = (key, newValue) => {
     setRecord((prevRecord) => ({
       ...prevRecord,
@@ -29,15 +33,21 @@ const RecordSteps = () => {
       <h1 className='text-2xl font-bold mb-6 text-center'>Select Your Mood</h1>
       {
         {
-          mood: (
+          1: (
             <MoodStep
-              onClickNext={() => handleClickNext('tag')}
+              onClickNext={() => handleClickNext(2)}
               onUpdateRecord={handleUpdateRecord}
               record={record}
             />
           ),
-          description: <></>,
-          tag: <></>,
+          3: <></>,
+          2: (
+            <TagStep
+              onClickNext={() => handleClickNext(3)}
+              onUpdateRecord={handleUpdateRecord}
+              record={record}
+            />
+          ),
         }[step]
       }
     </div>
