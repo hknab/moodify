@@ -51,6 +51,7 @@ const config = [
           ignoreRestSiblings: true,
         },
       ],
+      '@typescript-eslint/no-require-imports': 'warn',
     },
   },
 ];
