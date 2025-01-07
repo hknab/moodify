@@ -1,7 +1,8 @@
 'use client';
 
-import { openDB, IDBPDatabase } from 'idb';
-import { TMood, TTag, TRecord, TRecords } from '@/types';
+import { TMood, TRecord, TRecords, TTag } from '@/types';
+import { IDBPDatabase, openDB } from 'idb';
+import { getCurrentTime } from './utils';
 
 const DB_NAME = 'MoodifyDB';
 const DB_VERSION = 1;
@@ -9,11 +10,11 @@ const MOODS_STORE = 'moods';
 const TAGS_STORE = 'tags';
 const RECORDS_STORE = 'records';
 
-type DatabaseSchema = {
+interface DatabaseSchema {
   moods: TMood;
   tags: TTag;
   records: TRecord;
-};
+}
 
 // Default Moods and Tags
 const defaultMoods: TMood[] = [
@@ -117,9 +118,9 @@ async function getDatabase(): Promise<IDBPDatabase<DatabaseSchema>> {
 }
 
 // **Mood Operations**
-type TMoodWithoutId = Omit<TMood, 'id'>;
+export type TMoodInput = Omit<TMood, 'id' | 'createdAt' | 'updatedAt'>;
 export const mood = {
-  add: async (mood: TMoodWithoutId) => {
+  add: async (mood: TMoodInput) => {
     const db = await getDatabase();
     await db.put(MOODS_STORE, mood);
   },
@@ -129,7 +130,7 @@ export const mood = {
     await db.delete(MOODS_STORE, id);
   },
 
-  edit: async (id: string, updatedMood: Partial<TMoodWithoutId>) => {
+  edit: async (id: string, updatedMood: Partial<TMoodInput>) => {
     const db = await getDatabase();
     const existingMood = await db.get(MOODS_STORE, id);
     if (existingMood) {
@@ -145,9 +146,9 @@ export const mood = {
 };
 
 // **Tag Operations**
-type TTagWithoutId = Omit<TTag, 'id'>;
+export type TTagInput = Omit<TTag, 'id' | 'createdAt' | 'updatedAt'>;
 export const tag = {
-  add: async (tag: TTagWithoutId) => {
+  add: async (tag: TTagInput) => {
     const db = await getDatabase();
     await db.put(TAGS_STORE, tag);
   },
@@ -157,7 +158,7 @@ export const tag = {
     await db.delete(TAGS_STORE, id);
   },
 
-  edit: async (id: string, updatedTag: Partial<TTagWithoutId>) => {
+  edit: async (id: string, updatedTag: Partial<TTagInput>) => {
     const db = await getDatabase();
     const existingTag = await db.get(TAGS_STORE, id);
     if (existingTag) {
@@ -173,11 +174,16 @@ export const tag = {
 };
 
 // **Record Operations**
-type TRecordWithoutId = Omit<TRecord, 'id'>;
+export type TRecordInput = Omit<TRecord, 'id' | 'createdAt' | 'updatedAt'>;
 export const record = {
-  add: async (record: TRecordWithoutId) => {
+  add: async (record: TRecordInput) => {
     const db = await getDatabase();
-    await db.put(RECORDS_STORE, record);
+    const time = getCurrentTime();
+    await db.put(RECORDS_STORE, {
+      ...record,
+      createdAt: time,
+      updatedAt: time,
+    });
   },
 
   delete: async (id: string) => {
@@ -185,11 +191,15 @@ export const record = {
     await db.delete(RECORDS_STORE, id);
   },
 
-  edit: async (id: string, updatedRecord: Partial<TRecordWithoutId>) => {
+  edit: async (id: string, updatedRecord: Partial<TRecordInput>) => {
     const db = await getDatabase();
     const existingRecord = await db.get(RECORDS_STORE, id);
     if (existingRecord) {
-      await db.put(RECORDS_STORE, { ...existingRecord, ...updatedRecord });
+      await db.put(RECORDS_STORE, {
+        ...existingRecord,
+        ...updatedRecord,
+        updatedAt: getCurrentTime(),
+      });
     }
   },
 

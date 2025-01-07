@@ -1,19 +1,17 @@
 import { useDatabase } from '@/context/database-context';
-import { mood } from '@/lib/idb';
-import { TMood } from '@/types';
+import { mood, TMoodInput } from '@/lib/idb';
 
-type TMoodWithoutId = Omit<TMood, 'id'>;
 export function useMoods() {
   const { moods, fetchMoods } = useDatabase();
 
   // Add a new mood and refresh state
-  const addMood = async (newMood: TMoodWithoutId) => {
+  const addMood = async (newMood: TMoodInput) => {
     await mood.add(newMood);
     await fetchMoods(); // Re-fetch after adding
   };
 
   // Edit a mood and refresh state
-  const editMood = async (id: string, updatedMood: TMoodWithoutId) => {
+  const editMood = async (id: string, updatedMood: TMoodInput) => {
     await mood.edit(id, updatedMood);
     await fetchMoods(); // Re-fetch after editing
   };

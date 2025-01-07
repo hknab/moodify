@@ -1,17 +1,16 @@
 import { useDatabase } from '@/context/database-context';
-import { record } from '@/lib/idb';
-import { TRecord } from '@/types';
+import { record, TRecordInput } from '@/lib/idb';
 
-type TRecordWithoutId = Omit<TRecord, 'id'>;
 export function useRecords() {
   const { records, fetchRecords } = useDatabase();
 
-  const addRecord = async (newRecord: TRecordWithoutId) => {
-    await record.add(newRecord);
+  const addRecord = async (newRecord: TRecordInput) => {
+    console.log('add record called');
+    await record.add({ ...newRecord });
     await fetchRecords();
   };
 
-  const editRecord = async (id: string, updatedRecord: TRecordWithoutId) => {
+  const editRecord = async (id: string, updatedRecord: TRecordInput) => {
     await record.edit(id, updatedRecord);
     await fetchRecords();
   };

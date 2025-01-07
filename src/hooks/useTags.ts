@@ -1,17 +1,15 @@
 import { useDatabase } from '@/context/database-context';
-import { tag } from '@/lib/idb';
-import { TTag } from '@/types';
+import { tag, TTagInput } from '@/lib/idb';
 
-type TTagWithoutId = Omit<TTag, 'id'>;
 export function useTags() {
   const { tags, fetchTags } = useDatabase();
 
-  const addTag = async (newTag: TTagWithoutId) => {
+  const addTag = async (newTag: TTagInput) => {
     await tag.add(newTag);
     await fetchTags();
   };
 
-  const editTag = async (id: string, updatedTag: TTagWithoutId) => {
+  const editTag = async (id: string, updatedTag: TTagInput) => {
     await tag.edit(id, updatedTag);
     await fetchTags();
   };

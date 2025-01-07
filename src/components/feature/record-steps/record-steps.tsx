@@ -1,24 +1,31 @@
 'use client';
-import React, { useState } from 'react';
+import { useRecords } from '@/hooks';
+import { useGeoInfo } from '@/hooks/useGeoInfo';
+import { TRecordInput } from '@/lib/idb';
+import { useState } from 'react';
+import { DescriptionStep } from './description-step';
+import { MoodRecordedStep } from './final-step';
+import { MoodStep } from './mood-step';
 import {
   THandleClickNext,
   THandleUpdateRecord,
-  TRecordState,
   TStep,
 } from './record.steps.types';
-import { MoodStep } from './mood-step';
 import { TagStep } from './tag-step';
-import { DescriptionStep } from './description-step';
-import { MoodRecordedStep } from './final-step';
 
 const RecordSteps = () => {
+  const { error, loading, geoInfo } = useGeoInfo();
+
   const [step, setStep] = useState<TStep>(1);
 
-  const [record, setRecord] = useState<TRecordState>({
+  const [record, setRecord] = useState<TRecordInput>({
     score: 'Natural',
+    moods: [],
+    tags: [],
   });
 
-  console.log({ record });
+  const { addRecord, records } = useRecords();
+  console.log({ records });
 
   const handleUpdateRecord: THandleUpdateRecord = (key, newValue) => {
     setRecord((prevRecord) => ({
@@ -30,6 +37,10 @@ const RecordSteps = () => {
     setStep(nextStep);
   };
 
+  async function handleAddRecord() {
+    await addRecord({ ...record, ...geoInfo });
+    handleChangeStep(4);
+  }
   return {
     1: (
       <MoodStep
@@ -47,7 +58,7 @@ const RecordSteps = () => {
     ),
     3: (
       <DescriptionStep
-        onClickNext={() => handleChangeStep(4)}
+        onClickNext={handleAddRecord}
         onUpdateRecord={handleUpdateRecord}
         record={record}
       />

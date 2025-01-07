@@ -2,15 +2,16 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useTags } from '@/hooks';
+import { TRecordInput } from '@/lib/idb';
 import { TTag } from '@/types';
-import { FC, MouseEventHandler, PropsWithChildren } from 'react';
-import { THandleUpdateRecord, TRecordState } from './record.steps.types';
 import { motion } from 'framer-motion';
+import { FC, MouseEventHandler, PropsWithChildren } from 'react';
+import { THandleUpdateRecord } from './record.steps.types';
 
 export const TagStep: FC<
   PropsWithChildren<{
     onUpdateRecord: THandleUpdateRecord;
-    record: TRecordState;
+    record: TRecordInput;
     onClickNext: MouseEventHandler<HTMLButtonElement>;
   }>
 > = ({ onUpdateRecord, record, onClickNext }) => {

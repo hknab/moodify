@@ -4,14 +4,11 @@ import { BlurIn } from '@/components/ui/blur-in';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { useMoods } from '@/hooks';
+import { TRecordInput } from '@/lib/idb';
 import { TMood } from '@/types';
-import { FC, MouseEventHandler, PropsWithChildren, useState } from 'react';
-import {
-  THandleUpdateRecord,
-  TRecordState,
-  TScoreDetails,
-} from './record.steps.types';
 import { motion } from 'framer-motion';
+import { FC, MouseEventHandler, PropsWithChildren, useState } from 'react';
+import { THandleUpdateRecord, TScoreDetails } from './record.steps.types';
 
 const roundScore = (score: number) => Math.round(score);
 
@@ -28,7 +25,7 @@ const scoreDetails: TScoreDetails = [
 export const MoodStep: FC<
   PropsWithChildren<{
     onUpdateRecord: THandleUpdateRecord;
-    record: TRecordState;
+    record: TRecordInput;
     onClickNext: MouseEventHandler<HTMLButtonElement>;
   }>
 > = ({ onUpdateRecord, record, onClickNext }) => {

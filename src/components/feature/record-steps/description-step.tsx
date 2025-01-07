@@ -1,14 +1,15 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { TRecordInput } from '@/lib/idb';
 import { motion } from 'framer-motion';
 import { FC, MouseEventHandler, PropsWithChildren } from 'react';
-import { THandleUpdateRecord, TRecordState } from './record.steps.types';
+import { THandleUpdateRecord } from './record.steps.types';
 
 export const DescriptionStep: FC<
   PropsWithChildren<{
     onUpdateRecord: THandleUpdateRecord;
-    record: TRecordState;
+    record: TRecordInput;
     onClickNext: MouseEventHandler<HTMLButtonElement>;
   }>
 > = ({ onUpdateRecord, record, onClickNext }) => {

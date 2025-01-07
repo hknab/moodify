@@ -7,7 +7,11 @@ export type THandleUpdateRecord = (
   newValue: TRecord[keyof TRecord]
 ) => void;
 
-export type TRecordState = Partial<TRecord> & { score: TScore };
+export type TRecordState = Partial<TRecord> & {
+  score: TScore;
+  moods: string[];
+  tags: string[];
+};
 
 export type THandleClickNext = (nextStep: number) => void;
 
