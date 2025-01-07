@@ -1,7 +1,7 @@
 'use client';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
           Start recording your mood and emotions
         </p>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link href='/record'>
+          <Link href='/app/record'>
             <Button variant='gradient' size='lg'>
               RECORD A NEW MOOD
             </Button>

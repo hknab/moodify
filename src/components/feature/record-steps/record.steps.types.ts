@@ -1,4 +1,6 @@
-import { TRecord, TScore } from '@/types';
+import { TRecordInput } from '@/lib/idb';
+import { TFeeling, TRecord } from '@/types';
+import { StepContainerProps } from './step-container';
 
 export type TStep = number;
 
@@ -8,7 +10,7 @@ export type THandleUpdateRecord = (
 ) => void;
 
 export type TRecordState = Partial<TRecord> & {
-  score: TScore;
+  score: TFeeling;
   moods: string[];
   tags: string[];
 };
@@ -16,9 +18,17 @@ export type TRecordState = Partial<TRecord> & {
 export type THandleClickNext = (nextStep: number) => void;
 
 export type TScoreDetail = {
-  title: TScore;
-  textColor: string;
-  backgroundColor?: string;
+  title: TFeeling;
+  color: string;
 };
 
 export type TScoreDetails = TScoreDetail[];
+
+export interface StepComponentProps
+  extends Pick<
+    StepContainerProps,
+    'backCta' | 'nextCta' | 'onClickNext' | 'onClickBack' | 'disableNext'
+  > {
+  onUpdateRecord: THandleUpdateRecord;
+  record: TRecordInput;
+}

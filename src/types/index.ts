@@ -16,7 +16,7 @@ export interface TTag {
   updatedAt?: string;
 }
 
-export type TScore =
+export type TFeeling =
   | 'Very Unpleasant'
   | 'Unpleasant'
   | 'Slightly Unpleasant'
@@ -38,7 +38,7 @@ export interface TRecord {
   id: number;
   moods: TMoods;
   tags: TTag[];
-  score: TScore;
+  feeling: TFeeling;
   weather?: TWeather;
   location?: TLocation;
   description?: string;
