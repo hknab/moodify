@@ -9,8 +9,14 @@ export interface TTag {
   createdAt: string;
 }
 
-export type TScore = number;
-
+export type TScore =
+  | 'Very Unpleasant'
+  | 'Unpleasant'
+  | 'Slightly Unpleasant'
+  | 'Natural'
+  | 'Slightly Pleasant'
+  | 'Pleasant'
+  | 'Very Pleasant';
 export interface TMood {
   id: number;
   emoji: string;

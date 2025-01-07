@@ -1,30 +1,17 @@
 'use client';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useTags } from '@/hooks';
-import { TTag } from '@/types';
+import { Textarea } from '@/components/ui/textarea';
+import { motion } from 'framer-motion';
 import { FC, MouseEventHandler, PropsWithChildren } from 'react';
 import { THandleUpdateRecord, TRecordState } from './record.steps.types';
-import { motion } from 'framer-motion';
 
-export const TagStep: FC<
+export const DescriptionStep: FC<
   PropsWithChildren<{
     onUpdateRecord: THandleUpdateRecord;
     record: TRecordState;
     onClickNext: MouseEventHandler<HTMLButtonElement>;
   }>
 > = ({ onUpdateRecord, record, onClickNext }) => {
-  const { tags } = useTags();
-
-  const toggleTag = (tag: TTag) => {
-    onUpdateRecord(
-      'tags',
-      record.tags?.includes(tag)
-        ? record.tags.filter(({ id }) => id !== tag.id)
-        : [...(record.tags || []), tag]
-    );
-  };
-
   return (
     <>
       <motion.div
@@ -36,16 +23,16 @@ export const TagStep: FC<
         }}
         className='flex gap-2 flex-wrap justify-start items-start mt-auto pb-40 md:pb-60'
       >
-        {tags.map((tag) => (
-          <Badge
-            key={tag.id}
-            variant={record?.tags?.includes(tag) ? 'default' : 'outline'}
-            className='text-sm sm:text-md font-thin py-2 px-3 cursor-pointer transition-all duration-200 select-none'
-            onClick={() => toggleTag(tag)}
-          >
-            #{tag.title}
-          </Badge>
-        ))}
+        <Textarea
+          value={record.description}
+          onChange={(e) => onUpdateRecord('description', e.target.value)}
+          className='w-full p-4 text-md md:text-lg font-normal h-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg'
+          placeholder='Describe your mood...'
+          maxLength={250}
+        />
+        <span className='text-sm dark:text-gray-300 text-gray-700'>
+          {250 - (record?.description?.length || 0)} characters left
+        </span>
       </motion.div>
 
       <div className='fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 p-4 shadow-lg'>

@@ -10,3 +10,11 @@ export type THandleUpdateRecord = (
 export type TRecordState = Partial<TRecord> & { score: TScore };
 
 export type THandleClickNext = (nextStep: number) => void;
+
+export type TScoreDetail = {
+  title: TScore;
+  textColor: string;
+  backgroundColor?: string;
+};
+
+export type TScoreDetails = TScoreDetail[];
