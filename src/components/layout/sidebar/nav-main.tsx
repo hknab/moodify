@@ -38,7 +38,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className='text-md'>MOODIFY.wtf</SidebarGroupLabel>
+      <SidebarGroupLabel className='text-md'>MOODIFY</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible

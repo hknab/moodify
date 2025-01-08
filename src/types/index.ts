@@ -42,8 +42,13 @@ export interface TRecord {
   weather?: TWeather;
   location?: TLocation;
   description?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type TRecords = TRecord[];
+
+export type TBreadcrumb = {
+  title: string;
+  link?: string;
+};

@@ -1,16 +1,19 @@
 'use client';
 
-import { createContext, useContext } from 'react';
 import { TMood, TRecord, TTag } from '@/types';
+import { createContext, useContext } from 'react';
 
-interface DatabaseContextType {
+export type DatabaseContextType = {
   moods: TMood[];
   tags: TTag[];
   records: TRecord[];
+  isLoadingMoods: boolean;
+  isLoadingTags: boolean;
+  isLoadingRecords: boolean;
   fetchMoods: () => Promise<void>;
   fetchTags: () => Promise<void>;
   fetchRecords: () => Promise<void>;
-}
+};
 
 export const DatabaseContext = createContext<DatabaseContextType | null>(null);
 

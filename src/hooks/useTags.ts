@@ -9,12 +9,12 @@ export function useTags() {
     await fetchTags();
   };
 
-  const editTag = async (id: string, updatedTag: TTagInput) => {
+  const editTag = async (id: number, updatedTag: TTagInput) => {
     await tag.edit(id, updatedTag);
     await fetchTags();
   };
 
-  const deleteTag = async (id: string) => {
+  const deleteTag = async (id: number) => {
     await tag.delete(id);
     await fetchTags();
   };

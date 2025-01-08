@@ -13,7 +13,7 @@ export default function Home() {
         className='text-center'
       >
         <h1 className='text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100'>
-          MOODIFY<span className='text-purple-600 text-6xl'>.</span>WTF
+          MOODIFY
         </h1>
         <p className='text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300'>
           Start recording your mood and emotions

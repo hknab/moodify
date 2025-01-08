@@ -9,10 +9,10 @@ import {
   SidebarFooter,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import { routes } from '@/const';
 import { NavMain } from './nav-main';
 import { NavUser } from './nav-user';
 
-// This is sample data.
 const data = {
   user: {
     name: 'User13032',
@@ -22,17 +22,17 @@ const data = {
   navMain: [
     {
       title: 'Moods',
-      url: '#',
+      url: routes.app.children.records.route,
       icon: ChartNoAxesColumn,
       isActive: true,
       items: [
         {
           title: 'Add a new Record',
-          url: '/app/record',
+          url: routes.app.children.addRecord.route,
         },
         {
-          title: 'Moods',
-          url: '#',
+          title: 'Records',
+          url: routes.app.children.records.route,
         },
       ],
     },

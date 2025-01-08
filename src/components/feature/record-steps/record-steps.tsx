@@ -1,8 +1,10 @@
 'use client';
+import { routes } from '@/const';
 import { useRecords } from '@/hooks';
 import { useGeoInfo } from '@/hooks/useGeoInfo';
 import { TRecordInput } from '@/lib/idb';
 import { Save } from 'lucide-react';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import {
   THandleClickNext,
@@ -11,7 +13,6 @@ import {
 } from './record.steps.types';
 import { MoodStateStep } from './steps';
 import { DescriptionStep } from './steps/description-step';
-import { MoodRecordedStep } from './steps/final-step';
 import { MoodStep } from './steps/mood-step';
 import { TagStep } from './steps/tag-step';
 
@@ -88,7 +89,7 @@ const RecordSteps = () => {
         onClickNext={() => {
           handleAddRecord().then(() => {
             setRecord(initialRecord);
-            gotNextStep();
+            redirect(routes.app.children.records.route);
           });
         }}
         onClickBack={gotPreviousStep}
@@ -101,7 +102,6 @@ const RecordSteps = () => {
         }
       />
     ),
-    4: <MoodRecordedStep onAnimationFinished={() => handleChangeStep(0)} />,
   }[step];
 };
 

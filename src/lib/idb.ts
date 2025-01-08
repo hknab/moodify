@@ -125,12 +125,12 @@ export const mood = {
     await db.put(MOODS_STORE, mood);
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     const db = await getDatabase();
     await db.delete(MOODS_STORE, id);
   },
 
-  edit: async (id: string, updatedMood: Partial<TMoodInput>) => {
+  edit: async (id: number, updatedMood: Partial<TMoodInput>) => {
     const db = await getDatabase();
     const existingMood = await db.get(MOODS_STORE, id);
     if (existingMood) {
@@ -153,12 +153,12 @@ export const tag = {
     await db.put(TAGS_STORE, tag);
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     const db = await getDatabase();
     await db.delete(TAGS_STORE, id);
   },
 
-  edit: async (id: string, updatedTag: Partial<TTagInput>) => {
+  edit: async (id: number, updatedTag: Partial<TTagInput>) => {
     const db = await getDatabase();
     const existingTag = await db.get(TAGS_STORE, id);
     if (existingTag) {
@@ -186,12 +186,12 @@ export const record = {
     });
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     const db = await getDatabase();
     await db.delete(RECORDS_STORE, id);
   },
 
-  edit: async (id: string, updatedRecord: Partial<TRecordInput>) => {
+  edit: async (id: number, updatedRecord: Partial<TRecordInput>) => {
     const db = await getDatabase();
     const existingRecord = await db.get(RECORDS_STORE, id);
     if (existingRecord) {
