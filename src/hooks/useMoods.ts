@@ -11,13 +11,13 @@ export function useMoods() {
   };
 
   // Edit a mood and refresh state
-  const editMood = async (id: string, updatedMood: TMoodInput) => {
+  const editMood = async (id: number, updatedMood: TMoodInput) => {
     await mood.edit(id, updatedMood);
     await fetchMoods(); // Re-fetch after editing
   };
 
   // Delete a mood and refresh state
-  const deleteMood = async (id: string) => {
+  const deleteMood = async (id: number) => {
     await mood.delete(id);
     await fetchMoods(); // Re-fetch after deleting
   };

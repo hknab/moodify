@@ -3,7 +3,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
 import { TFeeling } from '@/types';
 import { FC } from 'react';
-import { StepComponentProps, TScoreDetails } from '../record.steps.types';
+import { StepComponentProps } from '../record.steps.types';
 import { StepContainer } from '../step-container';
 
 const feelingDescriptions: Record<TFeeling, string> = {
@@ -25,18 +25,6 @@ const feelingGradients: Record<TFeeling, string> = {
   Pleasant: 'bg-gradient-to-r from-blue-400 to-indigo-400',
   'Very Pleasant': 'bg-gradient-to-r from-indigo-400 to-purple-400',
 };
-
-const roundScore = (feeling: number) => Math.round(feeling);
-
-const scoreDetails: TScoreDetails = [
-  { title: 'Very Unpleasant', color: '#ea580c' },
-  { title: 'Unpleasant', color: '#f97316' },
-  { title: 'Slightly Unpleasant', color: '#fbbf24' },
-  { title: 'Natural', color: '#27272a' },
-  { title: 'Slightly Pleasant', color: '#10b981' },
-  { title: 'Pleasant', color: '#0891b2' },
-  { title: 'Very Pleasant', color: '#2563eb' },
-];
 
 export const MoodStateStep: FC<StepComponentProps> = ({
   onUpdateRecord,
