@@ -2,27 +2,30 @@
 import { useRecords } from '@/hooks';
 import { useGeoInfo } from '@/hooks/useGeoInfo';
 import { TRecordInput } from '@/lib/idb';
+import { Save } from 'lucide-react';
 import { useState } from 'react';
-import { DescriptionStep } from './description-step';
-import { MoodRecordedStep } from './final-step';
-import { MoodStep } from './mood-step';
 import {
   THandleClickNext,
   THandleUpdateRecord,
   TStep,
 } from './record.steps.types';
-import { TagStep } from './tag-step';
+import { MoodStateStep } from './steps';
+import { DescriptionStep } from './steps/description-step';
+import { MoodRecordedStep } from './steps/final-step';
+import { MoodStep } from './steps/mood-step';
+import { TagStep } from './steps/tag-step';
 
+const initialRecord = {
+  feeling: '' as TRecordInput['feeling'],
+  moods: [],
+  tags: [],
+};
 const RecordSteps = () => {
-  const { error, loading, geoInfo } = useGeoInfo();
+  const { geoInfo } = useGeoInfo();
 
-  const [step, setStep] = useState<TStep>(1);
+  const [step, setStep] = useState<TStep>(0);
 
-  const [record, setRecord] = useState<TRecordInput>({
-    score: 'Natural',
-    moods: [],
-    tags: [],
-  });
+  const [record, setRecord] = useState<TRecordInput>(initialRecord);
 
   const { addRecord, records } = useRecords();
   console.log({ records });
@@ -38,32 +41,67 @@ const RecordSteps = () => {
   };
 
   async function handleAddRecord() {
-    await addRecord({ ...record, ...geoInfo });
-    handleChangeStep(4);
+    try {
+      await addRecord({ ...(record as TRecordInput), ...geoInfo });
+      handleChangeStep(4);
+    } catch {
+      console.log('error: there was a problem with recoding your mood');
+    }
   }
+
+  const gotNextStep = () => {
+    setStep(step + 1);
+  };
+  const gotPreviousStep = () => {
+    setStep(step - 1);
+  };
+
   return {
-    1: (
-      <MoodStep
-        onClickNext={() => handleChangeStep(2)}
+    0: (
+      <MoodStateStep
+        onClickNext={gotNextStep}
         onUpdateRecord={handleUpdateRecord}
         record={record}
+        disableNext={!record.feeling.length}
+      />
+    ),
+    1: (
+      <MoodStep
+        onClickNext={gotNextStep}
+        onClickBack={gotPreviousStep}
+        onUpdateRecord={handleUpdateRecord}
+        record={record}
+        disableNext={!record.moods.length}
       />
     ),
     2: (
       <TagStep
-        onClickNext={() => handleChangeStep(3)}
+        onClickNext={gotNextStep}
+        onClickBack={gotPreviousStep}
         onUpdateRecord={handleUpdateRecord}
         record={record}
+        disableNext={!record.tags.length}
       />
     ),
     3: (
       <DescriptionStep
-        onClickNext={handleAddRecord}
+        onClickNext={() => {
+          handleAddRecord().then(() => {
+            setRecord(initialRecord);
+            gotNextStep();
+          });
+        }}
+        onClickBack={gotPreviousStep}
         onUpdateRecord={handleUpdateRecord}
         record={record}
+        nextCta={
+          <>
+            <Save /> SAVE RECORD
+          </>
+        }
       />
     ),
-    4: <MoodRecordedStep onAnimationFinished={() => handleChangeStep(1)} />,
+    4: <MoodRecordedStep onAnimationFinished={() => handleChangeStep(0)} />,
   }[step];
 };
 
